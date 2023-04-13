@@ -11,6 +11,7 @@ constructor
 import tkinter as tk
 from tkinter import ttk
 
+
 class Coin(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -67,12 +68,13 @@ class Coin(tk.Tk):
 
     def check_entry_values(self, entries):
         for entry in entries:
-            print(entries[entry].get())
-            # try:  # Attempt to convert entry values into ints
-            #     int_check = int(entries[entry].get)  # Get each coin value from dict
-            #     print(int_check)
-            # except ValueError as e:
-            #     print(e)
+            try:  # Attempt to convert entry values into ints
+                int_entry = int(entries[entry].get())  # Get each coin value from dict
+                if int_entry < 0:  # Just convert negative values to positive nums
+                    int_entry *= -1
+                print(int_entry)
+            except ValueError as e:
+                print("Error: Non-Integer value detected")
 
     def display_converted_values(self, entries):
 
