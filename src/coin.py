@@ -11,7 +11,6 @@ constructor
 import tkinter as tk
 from tkinter import ttk
 
-
 class Coin(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -29,21 +28,11 @@ class Coin(tk.Tk):
         Styling
         """
         self.title("Coin Converter")
-
-        """
-        Create Coin Inputs
-            - Penny
-            - Nickel
-            - Dime
-            - Quarter
-            - Half Dollar
-            - Dollar
-        """
         coin_entries = self.create_coin_input_fields(coins)
 
-        """
-        Coin Calculations
-        """
+        convert_button = tk.Button(self, text="Convert",
+                                   command=(lambda e=coin_entries: self.check_entry_values(e)))
+        convert_button.grid(column=0, row=5)
 
         """
         Display Coin Totals
@@ -58,22 +47,33 @@ class Coin(tk.Tk):
         # tk.Label(totals_group, text="Half Dollar Total").grid(column=0, row=4)
         # tk.Label(totals_group, text="Dollar Total").grid(column=0, row=5)
 
-        """
-        Input Checks
-        """
     def create_coin_input_fields(self, coins):
         entries = {}
 
         coin_group = tk.LabelFrame(self, text="Coins")
-        coin_group.grid(column=0, row=3, padx=(25, 25), pady=(10, 25))  # Create coin group
+        coin_group.grid(column=0, padx=(25, 25), pady=(10, 10))  # Create coin group
 
         row = 0
         for coin in coins:
-            tk.Label(coin_group, text=coin).grid(column=0, row=row)
-            coin_input = tk.Entry(coin_group, width=3)
+            tk.Label(coin_group, text=coin).grid(column=0, row=row)  # Create labels
+            coin_input = tk.Entry(coin_group, width=5)  # Create entry fields
+            coin_input.insert(0, "0")
             coin_input.grid(column=1, row=row)
 
-            entries[coin] = coin_input
+            entries[coin] = coin_input  # Insert user inputs into dict to be returned
             row += 1
 
         return entries
+
+    def check_entry_values(self, entries):
+        for entry in entries:
+            print(entries[entry].get())
+            # try:  # Attempt to convert entry values into ints
+            #     int_check = int(entries[entry].get)  # Get each coin value from dict
+            #     print(int_check)
+            # except ValueError as e:
+            #     print(e)
+
+    def display_converted_values(self, entries):
+
+        pass
