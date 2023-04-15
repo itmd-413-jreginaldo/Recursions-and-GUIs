@@ -9,6 +9,7 @@ constructor
 """
 
 import tkinter as tk
+import re
 
 
 class Coin(tk.Tk):
@@ -21,17 +22,17 @@ class Coin(tk.Tk):
         Styling
         """
         self.title("Coin Converter")
-        self.geometry("500x250")  # Launch gui with this size
-        self.minsize(500, 250)  # Display as fixed size
-        self.maxsize(500, 250)  # Display as fixed size
+        self.geometry("700x350")  # Launch gui with this size
+        self.minsize(700, 350)  # Display as fixed size
+        self.maxsize(700, 350)  # Display as fixed size
 
         """
         Main
         """
         coin_entries = self.create_coin_input_fields(coins)  # Create input fields and return dict of {"Coin":Value}
-        self.display_converted_values(coin_entries)
+        self.display_converted_values(coin_entries)  # Create output fields with the initiated zero values
         convert_button = tk.Button(self, text="Convert",  # Button to initiate conversion
-                                   command=(lambda e=coin_entries: self.check_entry_values(e)))
+                                   command=(lambda e=coin_entries: self.display_converted_values(e)))
         convert_button.grid(column=0, row=5)
 
     def create_coin_input_fields(self, coins):
@@ -52,18 +53,6 @@ class Coin(tk.Tk):
 
         return entries
 
-    def check_entry_values(self, entries):
-        for entry in entries:
-            print(entries[entry].get())
-            try:  # Attempt to convert entry values into ints
-                int_entry = int(entries[entry].get())  # Get each coin value from dict
-                if int_entry < 0:  # Just convert negative values to positive nums
-                    int_entry *= -1
-            except ValueError as e:
-                print("Error: Non-Integer value detected")
-
-        self.display_converted_values(entries)
-
     def display_converted_values(self, entries):
         # "Pennies", "Nickels", "Dimes", "Quarters", "Half Dollars", "Dollars"
 
@@ -75,32 +64,27 @@ class Coin(tk.Tk):
         for entry in entries:
             tk.Label(totals_group, text=entry).grid(column=0, row=row)  # Create labels
             if entry == "Pennies":
-                penny = str(round((float(entries[entry].get()) * .01), 2))
-
+                penny = self.check_entry_values(entry, entries[entry].get())
                 total += float(penny)
                 tk.Label(totals_group, text=penny, width=25).grid(column=1, row=row)
             elif entry == "Nickels":
-                nickel = str(round((float(entries[entry].get()) * .05), 2))
-
+                nickel = self.check_entry_values(entry, entries[entry].get())
                 total += float(nickel)
                 tk.Label(totals_group, text=nickel, width=25).grid(column=1, row=row)
             elif entry == "Dimes":
-                dimes = str(round((float(entries[entry].get()) * .1), 2))
+                dimes = self.check_entry_values(entry, entries[entry].get())
                 total += float(dimes)
                 tk.Label(totals_group, text=dimes, width=25).grid(column=1, row=row)
             elif entry == "Quarters":
-                quarters = str(round((float(entries[entry].get()) * .25), 2))
-
+                quarters = self.check_entry_values(entry, entries[entry].get())
                 total += float(quarters)
                 tk.Label(totals_group, text=quarters, width=25).grid(column=1, row=row)
             elif entry == "Half Dollars":
-                half_dollar = str(round((float(entries[entry].get()) * .5), 2))
-
+                half_dollar = self.check_entry_values(entry, entries[entry].get())
                 total += float(half_dollar)
                 tk.Label(totals_group, text=half_dollar, width=25).grid(column=1, row=row)
             elif entry == "Dollars":
-                dollar = str(float(entries[entry].get()))
-
+                dollar = self.check_entry_values(entry, entries[entry].get())
                 total += float(dollar)
                 tk.Label(totals_group, text=dollar, width=25).grid(column=1, row=row)
 
@@ -108,5 +92,29 @@ class Coin(tk.Tk):
 
         display_total = tk.LabelFrame(self, text="Final Total")  # Create totals group
         display_total.grid(column=1, row=5)
+
+        total = round(total, 2)
         tk.Label(display_total, text="Total").grid(column=0, row=0)
         tk.Label(display_total, text=str(total), width=30).grid(column=1, row=0)
+
+    def check_entry_values(self, coin_name, value):
+        coin_vals = {
+            "Pennies": 0.01,
+            "Nickels": 0.05,
+            "Dimes": 0.1,
+            "Quarters": .25,
+            "Half Dollars": .5,
+            "Dollars": 1
+        }
+
+        regex = "^0+"
+        value.replaceAll(regex, value)
+
+        try:
+            value = coin_vals[coin_name] * float(value)
+            if value < 0:
+                value *= -1
+        except ValueError:
+            value = 0.0
+
+        return str(value)
