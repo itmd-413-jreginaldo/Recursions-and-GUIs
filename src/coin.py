@@ -6,6 +6,12 @@ constructor
 
 'def __init__(self, *args, **kwargs):
     tk.Tk.__init__(self, *args, **kwargs)'
+
+Class / Program Description:
+    'coin.py' will be the main class to instantiate a tkinter GUI object when called upon in 'main.ipynb'
+
+    This program will display an interactive GUI that a user can input coin quantities to get the total converted
+    output in $USD.
 """
 
 import tkinter as tk
@@ -22,9 +28,9 @@ class Coin(tk.Tk):
         Styling
         """
         self.title("Coin Converter")
-        self.geometry("700x350")  # Launch gui with this size
-        self.minsize(700, 350)  # Display as fixed size
-        self.maxsize(700, 350)  # Display as fixed size
+        self.geometry("400x250")  # Launch gui with this size
+        self.minsize(400, 250)  # Display as fixed size
+        self.maxsize(400, 250)  # Display as fixed size
 
         """
         Main
@@ -39,7 +45,7 @@ class Coin(tk.Tk):
         entries = {}
 
         coin_group = tk.LabelFrame(self, text="Coins")
-        coin_group.grid(column=0, row=0, padx=25, pady=(30, 10))  # Create coin group
+        coin_group.grid(column=0, row=0, padx=25, pady=(30, 15))  # Create coin group
 
         row = 0
         for coin in coins:
@@ -66,36 +72,53 @@ class Coin(tk.Tk):
             if entry == "Pennies":
                 penny = self.check_entry_values(entry, entries[entry].get())
                 total += float(penny)
-                tk.Label(totals_group, text=penny, width=25).grid(column=1, row=row)
+
+                penny = f"$ {float(penny):.2f}"
+
+                tk.Label(totals_group, text=penny, width=10).grid(column=1, row=row)
             elif entry == "Nickels":
                 nickel = self.check_entry_values(entry, entries[entry].get())
                 total += float(nickel)
-                tk.Label(totals_group, text=nickel, width=25).grid(column=1, row=row)
+
+                nickel = f"$ {float(nickel):.2f}"
+
+                tk.Label(totals_group, text=nickel, width=10).grid(column=1, row=row)
             elif entry == "Dimes":
                 dimes = self.check_entry_values(entry, entries[entry].get())
                 total += float(dimes)
-                tk.Label(totals_group, text=dimes, width=25).grid(column=1, row=row)
+
+                dimes = f"$ {float(dimes):.2f}"
+
+                tk.Label(totals_group, text=dimes, width=10).grid(column=1, row=row)
             elif entry == "Quarters":
                 quarters = self.check_entry_values(entry, entries[entry].get())
                 total += float(quarters)
-                tk.Label(totals_group, text=quarters, width=25).grid(column=1, row=row)
+
+                quarters = f"$ {float(quarters):.2f}"
+
+                tk.Label(totals_group, text=quarters, width=10).grid(column=1, row=row)
             elif entry == "Half Dollars":
                 half_dollar = self.check_entry_values(entry, entries[entry].get())
                 total += float(half_dollar)
-                tk.Label(totals_group, text=half_dollar, width=25).grid(column=1, row=row)
+
+                half_dollar = f"$ {float(half_dollar):.2f}"
+
+                tk.Label(totals_group, text=half_dollar, width=10).grid(column=1, row=row)
             elif entry == "Dollars":
                 dollar = self.check_entry_values(entry, entries[entry].get())
                 total += float(dollar)
-                tk.Label(totals_group, text=dollar, width=25).grid(column=1, row=row)
 
+                dollar = f"$ {float(dollar):.2f}"
+
+                tk.Label(totals_group, text=dollar, width=10).grid(column=1, row=row)
             row += 1
 
         display_total = tk.LabelFrame(self, text="Final Total")  # Create totals group
         display_total.grid(column=1, row=5)
 
-        total = round(total, 2)
+        total = f"$ {total:.2f}"
         tk.Label(display_total, text="Total").grid(column=0, row=0)
-        tk.Label(display_total, text=str(total), width=30).grid(column=1, row=0)
+        tk.Label(display_total, text=total, width=15).grid(column=1, row=0)
 
     def check_entry_values(self, coin_name, value):
         coin_vals = {
@@ -107,8 +130,8 @@ class Coin(tk.Tk):
             "Dollars": 1
         }
 
-        regex = "^0+"
-        value.replaceAll(regex, value)
+        # regex = "^0+"
+        # value.replaceAll(regex, value)
 
         try:
             value = coin_vals[coin_name] * float(value)
