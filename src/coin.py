@@ -71,44 +71,44 @@ class Coin(tk.Tk):
             tk.Label(totals_group, text=entry).grid(column=0, row=row)  # Create labels
             if entry == "Pennies":
                 penny = self.check_entry_values(entry, entries[entry].get())
-                total += float(penny)
+                total += penny
 
-                penny = f"$ {float(penny):.2f}"
+                penny = f"$ {penny:.2f}"
 
                 tk.Label(totals_group, text=penny, width=10).grid(column=1, row=row)
             elif entry == "Nickels":
                 nickel = self.check_entry_values(entry, entries[entry].get())
-                total += float(nickel)
+                total += nickel
 
-                nickel = f"$ {float(nickel):.2f}"
+                nickel = f"$ {nickel:.2f}"
 
                 tk.Label(totals_group, text=nickel, width=10).grid(column=1, row=row)
             elif entry == "Dimes":
                 dimes = self.check_entry_values(entry, entries[entry].get())
-                total += float(dimes)
+                total += dimes
 
-                dimes = f"$ {float(dimes):.2f}"
+                dimes = f"$ {dimes:.2f}"
 
                 tk.Label(totals_group, text=dimes, width=10).grid(column=1, row=row)
             elif entry == "Quarters":
                 quarters = self.check_entry_values(entry, entries[entry].get())
-                total += float(quarters)
+                total += quarters
 
-                quarters = f"$ {float(quarters):.2f}"
+                quarters = f"$ {quarters:.2f}"
 
                 tk.Label(totals_group, text=quarters, width=10).grid(column=1, row=row)
             elif entry == "Half Dollars":
                 half_dollar = self.check_entry_values(entry, entries[entry].get())
-                total += float(half_dollar)
+                total += half_dollar
 
-                half_dollar = f"$ {float(half_dollar):.2f}"
+                half_dollar = f"$ {half_dollar:.2f}"
 
                 tk.Label(totals_group, text=half_dollar, width=10).grid(column=1, row=row)
             elif entry == "Dollars":
                 dollar = self.check_entry_values(entry, entries[entry].get())
-                total += float(dollar)
+                total += dollar
 
-                dollar = f"$ {float(dollar):.2f}"
+                dollar = f"$ {dollar:.2f}"
 
                 tk.Label(totals_group, text=dollar, width=10).grid(column=1, row=row)
             row += 1
@@ -140,4 +140,4 @@ class Coin(tk.Tk):
         except ValueError:
             value = 0.0
 
-        return str(value)
+        return value
